@@ -24,35 +24,35 @@ Follow the steps below to set up and run the program:
    ```bash
    git clone https://github.com/yourusername/BookManagement.git
    ```
-2. Navigate to the project directory:
-
-```bash
-cd BookManagement
-```
-3. Compile the code:
-
-``` bash
-g++ BookManagement.cpp -o bookmanagement
-```
-
-4. Run the program:
-
-   On Windows:
-      ```bash
-      .\bookmanagement
-      ```
-   On Linux/macOS:
-      ```bash
-      ./bookmanagement
-      ```
+   2. Navigate to the project directory:
+   
+   ```bash
+   cd BookManagement
+   ```
+   3. Compile the code:
+   
+   ``` bash
+   g++ BookManagement.cpp -o bookmanagement
+   ```
+   
+   4. Run the program:
+   
+      On Windows:
+         ```bash
+         .\bookmanagement
+         ```
+      On Linux/macOS:
+         ```bash
+         ./bookmanagement
+         ```
 ### Usage
 When you run the program, you will see a menu with the following options:
 
-**View Books**: Displays all books stored in books.txt along with their details.
-**Add a Book**: Prompts you to enter the book's name, author, and year of publication, and saves the book to books.txt.
-**Delete a Book**: Asks for the name of the book to delete and removes it from the file.
-**Search for a Book**: Requests the book's name and displays its details if it exists.
-**Quit**: Closes the program.
+- **View Books**: Displays all books stored in books.txt along with their details.
+- **Add a Book**: Prompts you to enter the book's name, author, and year of publication, and saves the book to books.txt.
+- **Delete a Book**: Asks for the name of the book to delete and removes it from the file.
+- **Search for a Book**: Requests the book's name and displays its details if it exists.
+- **Quit**: Closes the program.
 
 ### Example
 Here’s an example of how a session might look:
