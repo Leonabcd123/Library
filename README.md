@@ -66,11 +66,11 @@ Here’s an example of how a session might look:
    5. Quit
    > 2
    Enter The Book Name: 
-   Pride and Prejudice
+   Harry Potter and the Philosopher's Stone
    Enter The Book Author: 
-   Jane Austen
+   J.K. Rowling
    Enter The Book Publish Date: 
-   1813
+   1997
    Book added successfully!
    ```
 
