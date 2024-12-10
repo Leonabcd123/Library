@@ -28,12 +28,26 @@ To compile and run the program, follow the steps below:
 
   ```bash
   g++ BookManagement.cpp -o bookmanagement
+   ```
 
 3. Run the program:
 On Windows:
   ```bash
   .\bookmanagement
+   ```
 
 On Linux or macOS:
   ```bash
   ./bookmanagement
+   ```
+### Usage
+After running the program, the user will be presented with a menu to choose an operation:
+
+Show Books: Displays all books stored in books.txt.
+Add A Book: Prompts the user to enter a book's name, author, and year to add it to the file.
+Delete A Book: Prompts the user to enter a book's name to remove it from the file.
+Search For A Book: Prompts the user to enter a book's name and displays the details if found.
+Quit: Exits the program.
+
+### License
+This project is for personal use and learning. Feel free to modify and expand it!
