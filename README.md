@@ -49,7 +49,7 @@ Follow the steps below to set up and run the program:
 When you run the program, you will see a menu with the following options:
 
 1. **View Books**: Displays all books stored in books.txt along with their details.
-2. **Add a Book**: Prompts you to enter the book's name, author, and year of publication, and saves the book to books.txt.
+2. **Add a Book**: Prompts you to enter the book's name, author, and year of publication, and saves the book to (`books.txt`).
 3. **Delete a Book**: Asks for the name of the book to delete and removes it from the file.
 4. **Search for a Book**: Requests the book's name and displays its details if it exists.
 5. **Quit**: Closes the program.
