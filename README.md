@@ -24,22 +24,22 @@ To compile and run the program, follow the steps below:
    ```bash
    git clone https://github.com/yourusername/BookManagement.git
    
-2. Compile the code:
-
-  ```bash
-  g++ BookManagement.cpp -o bookmanagement
-   ```
-
-3. Run the program:
-   On Windows:
+   2. Compile the code:
+   
      ```bash
-     .\bookmanagement
+     g++ BookManagement.cpp -o bookmanagement
       ```
 
-   On Linux or macOS:
-     ```bash
-     ./bookmanagement
-      ```
+      3. Run the program:
+         On Windows:
+           ```bash
+           .\bookmanagement
+            ```
+
+         On Linux or macOS:
+           ```bash
+           ./bookmanagement
+            ```
      
 ### Usage
 After running the program, the user will be presented with a menu to choose an operation:
