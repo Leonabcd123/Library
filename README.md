@@ -31,15 +31,16 @@ To compile and run the program, follow the steps below:
    ```
 
 3. Run the program:
-On Windows:
-  ```bash
-  .\bookmanagement
-   ```
+   On Windows:
+     ```bash
+     .\bookmanagement
+      ```
 
-On Linux or macOS:
-  ```bash
-  ./bookmanagement
-   ```
+   On Linux or macOS:
+     ```bash
+     ./bookmanagement
+      ```
+     
 ### Usage
 After running the program, the user will be presented with a menu to choose an operation:
 
