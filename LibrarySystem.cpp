@@ -1,9 +1,24 @@
 #include <iostream>
 #include <fstream>
 #include <limits>
+#include <vector>
 
 class Book{
   public:
+
+    void setupBooks(){
+
+      std::ifstream fileIn("books.txt");
+
+      if (!fileIn.is_open()){
+
+        std::ofstream fileOut("books.txt");
+        fileOut.close();
+      }
+
+      fileIn.close();
+    }
+
     void showBooks(){
 
       std::ifstream fileIn("books.txt");
@@ -42,33 +57,33 @@ class Book{
       fileIn.close();
     }
 
-void addBook() {
-    std::ofstream fileOut("books.txt", std::ios::app);
+    void addBook() {
+      std::ofstream fileOut("books.txt", std::ios::app);
 
-    if (!fileOut.is_open()) {
-        std::cerr << "File Could Not Be Opened\n";
-        return;
+      if (!fileOut.is_open()) {
+          std::cerr << "File Could Not Be Opened\n";
+          return;
+      }
+
+      std::string name, author;
+      int year;
+
+      std::cout << "Enter The Book Name: \n";
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      std::getline(std::cin, name);
+
+      std::cout << "Enter The Book Author: \n";
+      std::getline(std::cin, author);
+
+      std::cout << "Enter The Book Publish Date: \n";
+      std::cin >> year;
+
+      fileOut << name << '\n' << author << '\n' << year << "\n\n";
+
+      fileOut.close();
     }
 
-    std::string name, author;
-    int year;
-
-    std::cout << "Enter The Book Name: \n";
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    std::getline(std::cin, name);
-
-    std::cout << "Enter The Book Author: \n";
-    std::getline(std::cin, author);
-
-    std::cout << "Enter The Book Publish Date: \n";
-    std::cin >> year;
-
-    fileOut << name << '\n' << author << '\n' << year << "\n\n";
-
-    fileOut.close();
-}
-
-void deleteBook() {
+    void deleteBook() {
     std::ifstream fileIn("books.txt");
     if (!fileIn.is_open()) {
         std::cerr << "File Could Not Be Opened\n";
@@ -81,38 +96,29 @@ void deleteBook() {
         return;
     }
 
-    std::string name;
-    std::cout << "Enter The Book's Name: ";
+    std::string detail;
+    std::cout << "Enter The Book's Name, Author Or Publication Date: ";
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    std::getline(std::cin, name);
+    std::getline(std::cin, detail);
 
     std::string line;
     bool found = false;
-    bool aFound = false;
 
     while (std::getline(fileIn, line)) {
-        if (line == name) {
+        if (line == detail) {
             found = true;
+            std::getline(fileIn, line);
+            std::getline(fileIn, line);
+            std::getline(fileIn, line);
             continue;
-
         }
-
-        if (found){
-          aFound = true;
-          continue;
-        }
-
-        if (aFound){
-          continue;
-        }
-
         fileOut << line << '\n';
     }
 
     fileIn.close();
     fileOut.close();
 
-    if (aFound) {
+    if (found) {
         std::remove("books.txt");
         std::rename("temp.txt", "books.txt");
         std::cout << "Book deleted successfully.\n";
@@ -123,64 +129,76 @@ void deleteBook() {
 }
 
 
+
     void searchBook(){
 
       std::ifstream inFile("books.txt");
 
-      std::string name;
-
       if (!inFile.is_open()){
         std::cerr << "File Could Not Be Opened\n";
-        return;
+          return;
       }
 
-      std::cout << "Enter The Book's Name: ";
-      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-      std::getline(std::cin, name);
-
-      std::string line;
+      std::string detail;
+      std::string name;
       std::string author;
       std::string year;
+      std::string line;
+      std::vector<std::string> books;
       bool found = false;
-      bool aFound = false;
 
-      while (std::getline(inFile, line)){
+      std::cout << "Enter The Book's Name, Author Or Publication Date: ";
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      std::getline(std::cin, detail);
 
-        if (line == name){
-          found = true;
-          continue;
+        
+
+        while (std::getline(inFile, line)){
+
+          if (line == detail){
+            found = true;
+          }
+
+          if (line.empty()){
+
+            if (!found)
+            {
+
+              books.clear();
+              continue;
+            }
+
+            else
+            {
+
+              break;
+
+            }
+
+          }
+
+          books.push_back(line);
         }
 
-        if (found){
-          found = false;
-          aFound = true;
-          author = line;
-          continue;
+        if (!found)
+        {
+
+          std::cout << "Your Book Wasn't Found!\n";
+          return;
+
         }
 
-        if (aFound){
-          year = line;
-          break;
-        }
+        name = books[0];
+        author = books[1];
+        year = books[2];
 
-
-
-
-      }
-
-      if (!aFound){
-        std::cout << "Your Book Wasn't Found!\n";
-      }
-
-      else{
         std::cout << "*******************************\n";
         std::cout << "Book Name: " << name << '\n';
         std::cout << "Author: " << author << '\n';
         std::cout << "Year: " << year << '\n';
         std::cout << "*******************************\n";
-      }
 
-    }
+        }
 
 
 
@@ -192,6 +210,8 @@ int main(){
   Book book;
   int choice;
   bool running = true;
+
+  book.setupBooks();
 
   while (running){
 
