@@ -6,9 +6,15 @@
 class Book{
   public:
 
-    std::string name;
-    std::string author;
-    std::string year;
+    std::string name, author, year;
+
+    Book() = default;
+    Book(const std::string& n, const std::string& a, const std::string& y) : name(n), author(a), year(y) {}
+};
+
+
+class Library{
+  public:
 
     void setupBooks(){
 
@@ -102,6 +108,7 @@ class Book{
     }
 
     void addBook() {
+      std::string name, author, year;
       std::ofstream fileOut("books.txt", std::ios::app);
 
       if (!fileOut.is_open()) {
@@ -212,11 +219,11 @@ class Book{
 
 int main(){
 
-  Book book;
+  Library library;
   int choice;
   bool running = true;
 
-  book.setupBooks();
+  library.setupBooks();
 
 
   while (running){
@@ -232,16 +239,16 @@ int main(){
     switch (choice){
 
       case 1:
-        book.showBooks();
+        library.showBooks();
         break;
       case 2:
-        book.addBook();
+        library.addBook();
         break;
       case 3:
-        book.deleteBook();
+        library.deleteBook();
         break;
       case 4:
-        book.searchBook();
+        library.searchBook();
         break;
       case 5:
         running = false;
