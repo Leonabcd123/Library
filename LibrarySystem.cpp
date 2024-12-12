@@ -5,7 +5,6 @@
 
 class Book{
   public:
-
     std::string name, author, year;
 
     Book() = default;
