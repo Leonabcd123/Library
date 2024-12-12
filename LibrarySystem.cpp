@@ -97,7 +97,7 @@ class Book{
     }
 
     std::string detail;
-    std::cout << "Enter The Book's Name, Author Or Publication Date: ";
+    std::cout << "Enter The Book's Name: ";
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::getline(std::cin, detail);
 
@@ -107,7 +107,6 @@ class Book{
     while (std::getline(fileIn, line)) {
         if (line == detail) {
             found = true;
-            std::getline(fileIn, line);
             std::getline(fileIn, line);
             std::getline(fileIn, line);
             continue;
