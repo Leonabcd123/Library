@@ -6,6 +6,10 @@
 class Book{
   public:
 
+    std::string name;
+    std::string author;
+    std::string year;
+
     void setupBooks(){
 
       std::ifstream fileIn("books.txt");
@@ -18,6 +22,46 @@ class Book{
 
       fileIn.close();
     }
+
+    std::vector<Book> getBooks() {
+      std::vector<Book> books;
+      std::ifstream fileIn("books.txt");
+
+      if (!fileIn.is_open()) {
+          std::cerr << "File Could Not Be Opened\n";
+          return books;
+      }
+
+      std::string line;
+      int lineNumber = 0;
+      Book currentBook;
+
+      while (std::getline(fileIn, line)) {
+          if (line.empty()) {
+              continue;
+          }
+
+          if (lineNumber == 0) {
+              currentBook.name = line;
+          } else if (lineNumber == 1) {
+              currentBook.author = line;
+          } else if (lineNumber == 2) {
+              currentBook.year = line;
+          }
+
+          lineNumber++;
+
+          if (lineNumber > 2) {
+              books.push_back(currentBook);
+              lineNumber = 0;
+          }
+      }
+
+      fileIn.close();
+      return books;
+  }
+
+
 
     void showBooks(){
 
@@ -65,9 +109,6 @@ class Book{
           return;
       }
 
-      std::string name, author;
-      int year;
-
       std::cout << "Enter The Book Name: \n";
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
       std::getline(std::cin, name);
@@ -84,120 +125,85 @@ class Book{
     }
 
     void deleteBook() {
-    std::ifstream fileIn("books.txt");
-    if (!fileIn.is_open()) {
-        std::cerr << "File Could Not Be Opened\n";
-        return;
-    }
+      std::vector<Book> books = getBooks();
+      if (books.empty()) {
+          std::cout << "No Books To Delete.\n";
+          return;
+      }
 
-    std::ofstream fileOut("temp.txt");
-    if (!fileOut.is_open()) {
-        std::cerr << "Temporary File Could Not Be Created\n";
-        return;
-    }
-
-    std::string detail;
-    std::cout << "Enter The Book's Name: ";
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    std::getline(std::cin, detail);
-
-    std::string line;
-    bool found = false;
-
-    while (std::getline(fileIn, line)) {
-        if (line == detail) {
-            found = true;
-            std::getline(fileIn, line);
-            std::getline(fileIn, line);
-            continue;
-        }
-        fileOut << line << '\n';
-    }
-
-    fileIn.close();
-    fileOut.close();
-
-    if (found) {
-        std::remove("books.txt");
-        std::rename("temp.txt", "books.txt");
-        std::cout << "Book deleted successfully.\n";
-    } else {
-        std::remove("temp.txt");
-        std::cout << "We Couldn't Find This Book!\n";
-    }
-}
-
-
-
-    void searchBook(){
-
-      std::ifstream inFile("books.txt");
-
-      if (!inFile.is_open()){
-        std::cerr << "File Could Not Be Opened\n";
+      std::ofstream fileOut("temp.txt");
+      if (!fileOut.is_open()) {
+          std::cerr << "Temporary File Could Not Be Created\n";
           return;
       }
 
       std::string detail;
-      std::string name;
-      std::string author;
-      std::string year;
-      std::string line;
-      std::vector<std::string> books;
-      bool found = false;
-
-      std::cout << "Enter The Book's Name, Author Or Publication Date: ";
+      std::cout << "Enter The Book's Name: ";
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
       std::getline(std::cin, detail);
 
-        
+      bool found = false;
 
-        while (std::getline(inFile, line)){
-
-          if (line == detail){
+      for (const auto& book : books) {
+          if (book.name != detail) {
+              fileOut << book.name << '\n';
+              fileOut << book.author << '\n';
+              fileOut << book.year << '\n';
+              fileOut << '\n';
+          }
+          else
+          {
             found = true;
           }
+      }
 
-          if (line.empty()){
+      fileOut.close();
 
-            if (!found)
-            {
+      if (found) {
+          std::remove("books.txt");
+          std::rename("temp.txt", "books.txt");
+          std::cout << "Book Deleted Successfully.\n";
+      } else {
+          std::remove("temp.txt");
+          std::cout << "We Couldn't Find This Book!\n";
+      }
+}
 
-              books.clear();
-              continue;
-            }
 
-            else
-            {
+    void searchBook() {
+    std::ifstream inFile("books.txt");
 
-              break;
+    if (!inFile.is_open()) {
+        std::cerr << "File Could Not Be Opened\n";
+        return;
+    }
 
-            }
+    std::string detail;
+    std::vector<Book> books = getBooks();
+    bool found = false;
 
-          }
+    std::cout << "Enter The Book's Name, Author, Or Publication Date: ";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::getline(std::cin, detail);
 
-          books.push_back(line);
+    for (const auto& book : books) {
+        if (book.name == detail || book.author == detail || book.year == detail) {
+            std::cout << "*******************************\n";
+            std::cout << "Book Name: " << book.name << '\n';
+            std::cout << "Author: " << book.author << '\n';
+            std::cout << "Year: " << book.year << '\n';
+            std::cout << "*******************************\n";
+            found = true;
         }
+    }
 
-        if (!found)
-        {
+    if (!found) {
 
-          std::cout << "Your Book Wasn't Found!\n";
-          return;
+      std::cout << "Your Book Wasn't Found!\n";
 
-        }
+    }
+}
 
-        name = books[0];
-        author = books[1];
-        year = books[2];
-
-        std::cout << "*******************************\n";
-        std::cout << "Book Name: " << name << '\n';
-        std::cout << "Author: " << author << '\n';
-        std::cout << "Year: " << year << '\n';
-        std::cout << "*******************************\n";
-
-        }
 
 
 
@@ -211,6 +217,7 @@ int main(){
   bool running = true;
 
   book.setupBooks();
+
 
   while (running){
 
