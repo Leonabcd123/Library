@@ -15,7 +15,6 @@ class Book{
 
 class Library{
   public:
-
     void setupBooks(){
 
       std::ifstream fileIn("books.txt");
