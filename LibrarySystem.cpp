@@ -27,7 +27,7 @@ class Library{
       fileIn.close();
     }
 
-    std::vector<Book> getBooks() {
+    std::vector<Book> getBooks() const {
       std::vector<Book> books;
       std::ifstream fileIn("books.txt");
 
@@ -36,34 +36,15 @@ class Library{
           return books;
       }
 
-      std::string line;
-      int lineNumber = 0;
-      Book currentBook;
-
-      while (std::getline(fileIn, line)) {
-          if (line.empty()) {
-              continue;
-          }
-
-          if (lineNumber == 0) {
-              currentBook.name = line;
-          } else if (lineNumber == 1) {
-              currentBook.author = line;
-          } else if (lineNumber == 2) {
-              currentBook.year = line;
-          }
-
-          lineNumber++;
-
-          if (lineNumber > 2) {
-              books.push_back(currentBook);
-              lineNumber = 0;
-          }
+      std::string name, author, year;
+      while (std::getline(fileIn, name) && std::getline(fileIn, author) && std::getline(fileIn, year)) {
+          books.emplace_back(name, author, year);
+          std::getline(fileIn, name); 
       }
 
-      fileIn.close();
       return books;
-  }
+}
+
 
 
 
